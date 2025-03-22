@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 const PORT = 8080;
 
-
+app.use(express.json());
 app.use(express.static("public"));
 
 app.get("/api", (req, res) => {

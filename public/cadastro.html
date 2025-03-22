@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro - Tic Tac Toe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0a0a0a;
+      font-family: 'Ubuntu', sans-serif;
+      color: #fff;
+    }
+
+    .container {
+      border: 2px solid #ccc;
+      border-radius: 20px;
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 30px 40px;
+      text-align: center;
+      background-color: #0a0a0a;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+
+    .avatar-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .avatar-section span {
+      font-size: 32px;
+      margin: 0 10px;
+    }
+
+    .avatar-button {
+      border: 1px solid #1e90ff;
+      background-color: transparent;
+      color: #1e90ff;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    label {
+      text-align: left;
+      font-size: 14px;
+    }
+
+    input {
+      padding: 8px;
+      border-radius: 6px;
+      border: 2px solid #ccc;
+      background-color: #000;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    button#btnCadastrar {
+      background-color: #003f6b;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button#btnCadastrar:hover {
+      background-color: #005999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>TIC TAC TOE</h1>
+    <h2>Cadastre-se no jogo</h2>
+
+    <div class="avatar-section">
+      <span>&lt;</span>
+      <button class="avatar-button">Avatar</button>
+      <span>&gt;</span>
+    </div>
+
+    <form id="cadastroForm">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required>
+
+      <!-- Campos extras visuais (não usados por enquanto) -->
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" required>
+
+      <label for="confirmarSenha">Confirmar senha:</label>
+      <input type="password" id="confirmarSenha" name="confirmarSenha" required>
+
+      <button type="submit" id="btnCadastrar">Cadastrar</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $("#cadastroForm").on("submit", function(e) {
+      e.preventDefault();
+
+      const nome = $("#nome").val();
+      const email = $("#email").val();
+      const senha = $("#senha").val();
+      const username = $("#email").val();
+      const avatar = "";
+
+      // Validação mínima
+      if (!nome || !email) {
+        alert("Preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      $.ajax({
+        url: "/api/v1/usuarios",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ nome, email, senha, username, avatar }),
+        success: function(response) {
+          alert("Usuário cadastrado com sucesso!");
+          $("#cadastroForm")[0].reset();
+        },
+        error: function(xhr) {
+          const msg = xhr.responseJSON?.erro || "Erro ao cadastrar.";
+          alert(msg);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
