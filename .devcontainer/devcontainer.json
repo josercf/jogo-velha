@@ -1,0 +1,17 @@
+{
+    "name": "Web Dev Environment",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "web",
+    "workspaceFolder": "/workspace",
+    "extensions": [
+        "ms-vscode.vscode-node-azure-pack",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker"
+    ],
+    "forwardPorts": [
+        80,
+        3306,
+        8080
+    ],
+    "postCreateCommand": "npm install"
+}
