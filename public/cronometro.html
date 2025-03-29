@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronômetro</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            font-family: 'Arial', sans-serif;
+        }
+
+        #cronometro {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #btIniciar {
+            background-color: #28a745;
+            color: white;
+        }
+        #btIniciar:hover {
+            background-color: #218838;
+        }
+
+        #btResetar {
+            background-color: #dc3545;
+            color: white;
+        }
+        #btResetar:hover {
+            background-color: #c82333;
+        }
+
+        #btResetar:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <p id="cronometro">00:00:00</p>
+    <div class="button-container">
+        <button class="btn" id="btIniciar" onclick="iniciarPausar()">Iniciar</button>
+        <button class="btn" id="btResetar" disabled onclick="resetar()">Resetar</button>
+    </div>
+</body>
+</html>
+
+<script>
+    crHora = 0;
+    crMinuto = 0;
+    crSegundo = 0;
+    crPausado = true;
+
+    somarCronometro = function(){
+
+        if(crPausado == true){
+            return;
+        }
+
+        cronometro = document.getElementById('cronometro');
+
+        crSegundo++;
+        if(crSegundo>59){
+            crMinuto++;
+            crSegundo = 0;
+        }
+
+        if(crMinuto>59){
+            crHora++;
+            crMinuto = 0;
+        }
+
+        crHora = crHora.toString().padStart(2, '0');
+        crMinuto = crMinuto.toString().padStart(2, '0');
+        crSegundo = crSegundo.toString().padStart(2, '0');
+
+
+        horaAEscrever = crHora + ':' + crMinuto + ':' + crSegundo;
+
+        cronometro.textContent = horaAEscrever;
+
+    }
+
+    iniciarPausar = function(){
+        if(crPausado == false){
+            document.getElementById('btIniciar').textContent = 'Retomar';
+            document.getElementById('btResetar').disabled = false;
+            crPausado = true;
+        }
+        else{
+            document.getElementById('btIniciar').textContent = 'Pausar';
+            document.getElementById('btResetar').disabled = true;
+
+            crPausado = false;
+        }
+    }
+
+    resetar = function(){
+        crHora = 0;
+        crMinuto = 0;
+        crSegundo = 0;
+        crPausado = true;
+        document.getElementById('btResetar').disabled = true;
+        document.getElementById('btIniciar').textContent = 'Iniciar';
+        cronometro.textContent = "00:00:00";
+
+
+    }
+    
+    setInterval(somarCronometro, 1000);
+</script>
+</html>
