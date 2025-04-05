@@ -1,0 +1,39 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        const id_usuario_a = 1;
+        const id_usuario_b = 2;
+
+        $.ajax({
+            url: "/api/v1/conexao",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ id_usuario_a, id_usuario_b }),
+            success: function (response) {
+                console.log('certo', response);
+                // Swal.fire({
+                //     title: "Login efetuado!",
+                //     icon: "success"
+                // });
+                // $("#cadastroForm")[0].reset();
+            },
+            error: function (error) {
+                console.log('erro', error);
+
+                // if (xhr.status == 401) {
+                //     Swal.fire({
+                //         title: "Usuário não encontrado!",
+                //         icon: "error"
+                //     });
+                // }
+                // else {
+                //     const msg = xhr.responseJSON?.erro || "Erro ao cadastrar.";
+                //     alert(msg);
+                // }
+
+            }
+        });
+
+        // $.ajax({url:...., method: ..., contentType: "application/json", data:..., success: function(response){}, error: function(error){}})
+
+
+</script>

@@ -1,0 +1,48 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+const id_partida  = 1; // permanece todo o tempo do mesmo jogo
+const id_usuario  = 1; // muda a cada rodada
+const area_jogada = 7; // nao pode se repetir
+const peca_do_jogador = 'x'; // alterna entre o x e o
+
+        $.ajax({
+            url: "/api/v1/partidaHistorico",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ id_partida, id_usuario, area_jogada,peca_do_jogador }),
+            success: function (response) {
+                console.log('certo', response);
+                // Swal.fire({
+                //     title: "Login efetuado!",
+                //     icon: "success"
+                // });
+                // $("#cadastroForm")[0].reset();
+            },
+            error: function (error) {
+                console.log('erro', error);
+
+                    Swal.fire({
+                        title: error.responseJSON,
+                        icon: "error"
+                    });
+
+                // if (xhr.status == 401) {
+                //     Swal.fire({
+                //         title: "Usuário não encontrado!",
+                //         icon: "error"
+                //     });
+                // }
+                // else {
+                //     const msg = xhr.responseJSON?.erro || "Erro ao cadastrar.";
+                //     alert(msg);
+                // }
+
+            }
+        });
+
+        // $.ajax({url:...., method: ..., contentType: "application/json", data:..., success: function(response){}, error: function(error){}})
+
+
+</script>

@@ -15,3 +15,32 @@ model usuario {
   username    String
   avatar      String
 }
+
+enum Status {
+  criado
+  andamento
+  finalizado
+}
+
+model conexao {
+  id              Int      @id @default(autoincrement())
+  id_usuario_a    Int
+  id_usuario_b    Int
+  data_solicitacao DateTime @default(now())
+  status          Status   @default(criado)
+}
+
+enum PecaDoJogador{
+  x
+  o
+}
+
+model partida_historico{
+  id Int @id @default(autoincrement())
+  id_partida Int
+  id_usuario Int
+  area_jogada Int
+  peca_do_jogador PecaDoJogador
+  data_solicitacao DateTime @default(now())
+
+}
