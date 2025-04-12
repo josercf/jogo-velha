@@ -23,13 +23,11 @@
 
         .top-bar {
             display: flex;
-            justify-content: space-between;
+            justify-content:center;
             align-items: center;
         }
 
-        .top-bar .espectadores {
-            font-size: 32px;         
-        }
+        
 
         .titulo {
             font-size: 28px;
@@ -114,6 +112,11 @@
             color: #ccc;
         }
 
+        .celula:hover{
+            background-color: #fffae681;
+            cursor: pointer;
+        }
+
         .celula:nth-child(1),
         .celula:nth-child(2),
         .celula:nth-child(4),
@@ -148,14 +151,16 @@
             margin-top: 5px;
         }
 
+        .rodape .espectadores {
+            font-size: 28px;      
+        }
 
     </style>
 </head>
 <body>
     <div class="game-container">
-        <div class="top-bar">
-            <div class="titulo">Sua vez</div>
-            <div class="espectadores">1 👁️</div>
+        <div class="top-bar">           
+            <div class="titulo">Sua vez</div>            
         </div>
 
         <div class="painel">
@@ -171,15 +176,16 @@
             </div>
 
              <div class="tabuleiro">
-                <div class="celula"></div>
-                <div class="celula"></div>
-                <div class="celula"></div>
-                <div class="celula"></div>
-                <div class="celula"></div>
-                <div class="celula"></div>
-                <div class="celula"></div>
-                <div class="celula"></div>
-                <div class="celula"></div>
+                <div class="celula" id="celula-1" data-posicao="1"></div>
+                <div class="celula" id="celula-2" data-posicao="2"></div>
+                <div class="celula" id="celula-3" data-posicao="3"></div>
+                <div class="celula" id="celula-4" data-posicao="4"></div>
+                <div class="celula" id="celula-5" data-posicao="5"></div>
+                <div class="celula" id="celula-6" data-posicao="6"></div>
+                <div class="celula" id="celula-7" data-posicao="7"></div>
+                <div class="celula" id="celula-8" data-posicao="8"></div>
+                <div class="celula" id="celula-9" data-posicao="9"></div>
+
             </div> 
 
             <div class="painel-jogador">
@@ -201,6 +207,7 @@
               <div class="modo">
                 Ranqueada
               </div>
+              <div class="espectadores">1 </div>
 
             </div>
         </div>
@@ -210,7 +217,48 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
+    const id_player1 = 1; // ID do jogador 1
+    const id_player2 = 2; // ID do jogador 2
+    let ultimoJogador = id_player1; // Começa com o jogador 1    
+
+    $(document).ready(function() { 
+        $(".celula").click(function() { 
+            const jogadorAtual = definirJogador();
+            const simbolo = obterSimbilo(jogadorAtual);
+
+            let posicao = $(this).data("posicao");
+            //alert(`Você clicou na célula ${posicao}`);            
+
+            let valor = $(this).text();
+            if (valor == "") {
+                $(this).text(simbolo);
+                //$(this).css("color", "red");
+            } else {
+                alert("Essa célula já foi preenchida!");
+            }
+        });
+    });
+
+    function definirJogador(){
+        if(ultimoJogador == id_player1){
+            ultimoJogador = id_player2;
+        }else{
+            ultimoJogador = id_player1;
+        }
+        return ultimoJogador;
+    }
+
+    function obterSimbilo(id_jogador){
+        if(id_jogador == id_player1){
+            return "X";
+        }else{
+            return "O";
+        }
+    }
+</script>
+
 
 // const id_partida  = 1; // permanece todo o tempo do mesmo jogo
 // const id_usuario  = 1; // muda a cada rodada
@@ -255,4 +303,3 @@
 //         // $.ajax({url:...., method: ..., contentType: "application/json", data:..., success: function(response){}, error: function(error){}})
 
 
-</script>
