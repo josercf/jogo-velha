@@ -221,7 +221,7 @@
 <script>
     const id_player1 = 1; // ID do jogador 1
     const id_player2 = 2; // ID do jogador 2
-    let ultimoJogador = id_player1; // Começa com o jogador 1    
+    let ultimoJogador = null; // Começa com o jogador 1    
 
     $(document).ready(function() { 
         $(".celula").click(function() { 
@@ -238,8 +238,39 @@
             } else {
                 alert("Essa célula já foi preenchida!");
             }
+
+            verificarVitoria();
         });
     });
+
+    function verificarVitoria(){
+        const combinacoes = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+            [1, 4, 7],
+            [2, 5, 8],
+            [3, 6, 9],
+            [1, 5, 9],
+            [3, 5, 7]
+        ];	
+
+        for (let i = 0; i < combinacoes.length; i++) {
+            const [a, b, c] = combinacoes[i];
+            const celulaA = $(`#celula-${a}`).text();
+            const celulaB = $(`#celula-${b}`).text();
+            const celulaC = $(`#celula-${c}`).text();
+
+            if (celulaA === celulaB && celulaB === celulaC && celulaA !== "") {
+                //alert(`Jogador ${jogadorAtual} venceu!`);
+                Swal.fire({
+                        title: `Jogador ${ultimoJogador} venceu!`,
+                        icon: "success"
+                    });
+                return;
+            }
+        }
+    }
 
     function definirJogador(){
         if(ultimoJogador == id_player1){
@@ -257,7 +288,7 @@
             return "O";
         }
     }
-</script>
+
 
 
 // const id_partida  = 1; // permanece todo o tempo do mesmo jogo
@@ -303,3 +334,4 @@
 //         // $.ajax({url:...., method: ..., contentType: "application/json", data:..., success: function(response){}, error: function(error){}})
 
 
+</script>
