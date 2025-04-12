@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <title>Partida</title>
     <style>
 
         body {         
@@ -16,7 +16,7 @@
             border: 2px solid #ccc;
             border-radius: 20px;
             max-width: 1200px;
-            margin: 30px auto;
+            margin: 15px auto;
             padding: 20px;
             text-align: center;
         }
@@ -70,12 +70,12 @@
 
         .info-id{
             font-size: 12px;
-            margin-bottom: 100px;
+            margin-bottom: 65px;
         }
 
         .simbolo{
             font-size: 50px;
-            margin-bottom: 100px;
+            margin-bottom: 65px;
         }
 
         .raking{
@@ -95,28 +95,57 @@
             color: silver;
         }
 
-
-
-
         .tabuleiro{
             display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-template-rows: repeat(3, 100px);
-            gap: 10px;
+            grid-template-columns: repeat(3, 130px);
+            grid-template-rows: repeat(3, 130px);            
             align-items: center;
             justify-items: center;
             margin: 0 20px;
         }
 
         .celula{
-            width: 100px;
-            height: 100px;
-            border: 3px solid #1e90ff;
+            width: 130px;
+            height: 130px;
             font-size: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1e90ff;
+            color: #ccc;
+        }
+
+        .celula:nth-child(1),
+        .celula:nth-child(2),
+        .celula:nth-child(4),
+        .celula:nth-child(5){
+            border-right: 3px solid #ccc;
+            border-bottom: 3px solid #ccc;
+        }
+
+        .celula:nth-child(3),
+        .celula:nth-child(6){
+            border-bottom: 3px solid #ccc;
+        }
+        
+       
+
+        .celula:nth-child(7),
+        .celula:nth-child(8){
+            border-right: 3px solid #ccc;
+        } 
+
+        .rodape{
+            margin-top: 30px;
+
+        }
+
+        .cronometro{
+            font-size: 20px;         
+        }
+
+        .modo{
+            font-size: 18px;
+            margin-top: 5px;
         }
 
 
@@ -163,7 +192,18 @@
                     <span>3</span>
                 </div>
             </div>
-        </div>         
+        </div>    
+        
+        <div class="rodape">
+            <div class="cronometro">
+                Cronômetro: 00:00:00
+              </div>
+              <div class="modo">
+                Ranqueada
+              </div>
+
+            </div>
+        </div>
     </div> 
 </body>
 </html>
