@@ -58,6 +58,67 @@ app.get("/api/v1/conexao", async (req, res) => {
     const conexao = await prisma.conexao.findMany();
     res.status(200).json(conexao);
 })
+
+//TODO: 1.a Criar um endpoint para retornar a partida com status criado.
+app.get("/api/v1/partida/em-andamento", async (req, res) => {
+    const partida = await prisma.partida.findMany({
+        where: {
+            status: 'criado'
+        }
+    });
+    res.status(200).json(partida);
+});
+
+//TODO: 1.b Criar um endpoint para realizar a criação de uma partida.
+app.post("/api/v1/partida", async (req, res) => {
+    const {
+        id_usuario        
+    } = req.body;
+
+    const partida = await prisma.partida.create({
+        data: {
+            id_usuario_a,
+            id_usuario_b : null,
+            status: 'criado'
+        }
+    });
+
+    res.status(201).json(partida);
+});
+
+//TODO: 1.c Criar um endpoint para ingressar o usuário b na partida. 
+//Deverá receber o id da partida e o id do usuário. Fazer um update dos campos id_usuario_b e statius para 'andamento'.
+app.put("/api/v1/partida/:id_partida", async (req, res) => {
+    const { id_partida } = req.params;
+    const { id_usuario_b } = req.body;
+
+    const partida = await prisma.partida.update({
+        where: { id: Number(id_partida) },
+        data: {
+            id_usuario_b,
+            status: 'andamento'
+        }
+    });
+
+    res.status(200).json(partida);
+});
+
+
+//TODO: 1.d Criar um endpoint que recebe o id_parida e retorna a última jogada registrada no historico da partida.
+app.get("/api/v1/partida/:id_partida/historico", async (req, res) => {
+    const { id_partida } = req.params;
+
+    const partida_historico = await prisma.partida_historico.findMany({
+        where: { id_partida },
+        orderBy: { id: 'desc' },
+        take: 1
+    });
+
+    res.status(200).json(partida_historico);
+});
+
+
+
 // data: JSON.stringify({ id_partida, id_usuario, area_jogada,peca_do_jogador }),
 
 app.post("/api/v1/partidaHistorico", async (req, res) => {

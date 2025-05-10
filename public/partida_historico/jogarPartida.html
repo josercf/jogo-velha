@@ -223,7 +223,26 @@
     const id_player2 = 2; // ID do jogador 2
     let ultimoJogador = null; // Começa com o jogador 1    
 
+
+    //TODO: 2.a Criar uma função que é executada a cada 1 segundo
+    //e realiza um request para o endpoint "/api/v1/partida/:id_partida/historico"
+    //a partir do retorno verifica se a jogada foi realizada pelo jogador logado.
+    //caso não seja, exibe um alerta informando que é a vez do outro jogador.
+    //caso seja, atualiza o tabuleiro com a jogada realizada pelo outro jogador.
+    //e debloqueia o tabuleiro para que o jogador atual possa realizar a jogada.
+
+
+
+
     $(document).ready(function() { 
+        //TODO: 1.b realizar uma chamada para a api no endpoint "/api/v1/partida/em-andamento"
+        //para verificar se existe uma partida em andamento
+        //caso não exista, realizar uma chamada para o endpoint "/api/v1/partida" realizando a criação da partida e ingressar o usuário atual na partida criada.
+        //caso exista, realizar uma chamada para o endpoint "/api/v1/partida/:id_partida" realizando a atualização do status da partida e ingressar o usuário atual na partida existente.
+
+
+       
+
         $(".celula").click(function() { 
             const jogadorAtual = definirJogador();
             const simbolo = obterSimbilo(jogadorAtual);
@@ -233,6 +252,7 @@
 
             let valor = $(this).text();
             if (valor == "") {
+            //TODO: realizar um request para "/api/v1/partidaHistorico" para persistir a jogada atual no servidor
                 $(this).text(simbolo);
                 //$(this).css("color", "red");
             } else {

@@ -25,7 +25,7 @@ enum Status {
 model conexao {
   id              Int      @id @default(autoincrement())
   id_usuario_a    Int
-  id_usuario_b    Int
+  id_usuario_b    Int //1.c transformar esta coluna em uma coluna nullable (pode criar a linha sem este valor)
   data_solicitacao DateTime @default(now())
   status          Status   @default(criado)
 }
