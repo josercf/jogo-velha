@@ -1,3 +1,4 @@
+require('dotenv').config();  
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const req = require("express/lib/request");
@@ -61,7 +62,7 @@ app.get("/api/v1/conexao", async (req, res) => {
 
 //TODO: 1.a Criar um endpoint para retornar a partida com status criado.
 app.get("/api/v1/partida/em-andamento", async (req, res) => {
-    const partida = await prisma.partida.findMany({
+    const partida = await prisma.conexao.findMany({
         where: {
             status: 'criado'
         }
@@ -75,9 +76,9 @@ app.post("/api/v1/partida", async (req, res) => {
         id_usuario        
     } = req.body;
 
-    const partida = await prisma.partida.create({
+    const partida = await prisma.conexao.create({
         data: {
-            id_usuario_a,
+            id_usuario_a: id_usuario,
             id_usuario_b : null,
             status: 'criado'
         }
@@ -92,7 +93,7 @@ app.put("/api/v1/partida/:id_partida", async (req, res) => {
     const { id_partida } = req.params;
     const { id_usuario_b } = req.body;
 
-    const partida = await prisma.partida.update({
+    const partida = await prisma.conexao.update({
         where: { id: Number(id_partida) },
         data: {
             id_usuario_b,
@@ -161,6 +162,27 @@ app.post("/api/v1/partidaHistorico", async (req, res) => {
     }
 });
 
+//criar um endpoint get que retornar os dados do usuario por meio do id
+app.get('/api/v1/usuario/:id', async (req, res) => {
+    const { id } = req.params;
+    const usuario = await prisma.usuario.findUnique({
+        where: { id: Number(id) }
+    });
+
+    if (usuario == null) {
+        return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+      const response = {
+            id: usuario.id,
+            nome: usuario.nome,
+            email: usuario.email,
+            username: usuario.username,
+            avatar: usuario.avatar
+        };
+    return res.status(200).json(response);
+});
+
 app.post('/api/v1/login', async (req, res) => {
     const { email, senha } = req.body;
     const usuario = await prisma.usuario.findUnique({ where: { email, senha } });
@@ -169,7 +191,14 @@ app.post('/api/v1/login', async (req, res) => {
         return res.status(401).json({ error: "Credenciais Inválidas" });
     }
     else {
-        return res.status(200).json(usuario);
+        const response = {
+            id: usuario.id,
+            nome: usuario.nome,
+            email: usuario.email,
+            username: usuario.username,
+            avatar: usuario.avatar
+        };
+        return res.status(200).json(response);
     }
 })
 

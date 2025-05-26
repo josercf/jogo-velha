@@ -48,10 +48,16 @@
                 contentType: "application/json",
                 data: JSON.stringify({ email, senha }),
                 success: function (response) {
-                    Swal.fire({
-                        title: "Login efetuado!",
-                        icon: "success"
-                    });
+                    // Swal.fire({
+                    //     title: "Login efetuado!",
+                    //     icon: "success"
+                    // });
+                    
+                    // Armazenar o usuário no localStorage
+                    localStorage.setItem("usuario", JSON.stringify(response));
+
+                    // Redirecionar para a página principal do jogo
+                    window.location.href = "partida_historico/jogarPartida.html";
                     // $("#cadastroForm")[0].reset();
                 },
                 error: function (xhr) {
